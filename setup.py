@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-VERSION = __import__("swingtime").__version__
+VERSION = __import__("cmsplugin_swingtime").__version__
 
 setup(
     name="cmsplugin_swingtime",
