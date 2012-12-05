@@ -1,4 +1,5 @@
 VERSION = (0, 2, 0, 'final', 0)
+__version__ = '.'.join((str(each) for each in VERSION[:4]))
 
 #-------------------------------------------------------------------------------
 def get_version():

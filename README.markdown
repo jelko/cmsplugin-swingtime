@@ -1,4 +1,4 @@
-Swingtime is a Django application similar to a stripped down version of iCal for 
+Swingtime is a Django application and Django CMS plugin similar to a stripped down version of iCal for 
 Mac OS X or Google Calendar. Swingtime provides an ``Event`` model that acts as 
 a metadata container for one or more ``Occurrence`` objects, which in turn 
 describe start and end times for a specific occurrence of an event.
