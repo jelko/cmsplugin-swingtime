@@ -1,0 +1,5 @@
+{{ object.title }}
+{% if object.where %}{{ object.where }}{% endif %}
+{% for occurrence in object.occurrence_set.all %}
+{{ occurrence.start_time|date:"l d. M Y H:i" }} - {{ occurrence.end_time|date:"l d. M Y H:i" }}
+{% endfor %}

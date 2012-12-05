@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load placeholder_tags %}
+{% load sorl_thumbnail %}
+
+{% block base_content %}
+{% comment %} TODO: add child base template with blocks for headline and similar parts {% endcomment %}
+<h1>{{ event.title }}</h1>
+{% if event.where %}{{ event.where }}{% endif %}
+<p>{% if event.uri %}<a href="{{ event.uri }}">{{ event.uri }}</a>{% endif %}</p>
+<hr/>
+{% for occurrence in event.occurrence_set.all %}
+{% if not occurrence.hide_time %}
+<h2>{{ occurrence.start_time|date:"l d. M Y H:i" }} - {{ occurrence.end_time|date:"l d. M Y H:i" }}</h2>
+{% else %}
+<h2>{{ occurrence.start_time|date:"l d. M Y" }} - {{ occurrence.end_time|date:"l d. M Y" }}</h2>
+{% endif %}
+{% endfor %}
+<hr/>
+
+{% render_placeholder event.description %}
+
+{% endblock %}

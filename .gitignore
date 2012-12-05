@@ -1,0 +1,15 @@
+.DS_Store
+*.~
+*.swp
+*.swp
+*.swo
+*.log
+*.pot
+*.pyc
+bin
+lib
+include
+.Python
+local_settings.py
+VERSION
+schedule-data/*/*

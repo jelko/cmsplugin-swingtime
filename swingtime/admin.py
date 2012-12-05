@@ -1,15 +1,13 @@
 from django.contrib.contenttypes import generic
 from django.contrib import admin
 from swingtime.models import *
+from cms.admin.placeholderadmin import PlaceholderAdmin
+
+
 
 #===============================================================================
-class EventTypeAdmin(admin.ModelAdmin):
-    list_display = ('label', 'abbr')
-
-
-#===============================================================================
-class NoteAdmin(admin.ModelAdmin):
-    list_display = ('note', 'created')
+#class GoogleCalendarAccountAdmin(admin.ModelAdmin):
+#    model = GoogleCalendarAccount
 
 
 #===============================================================================
@@ -19,19 +17,11 @@ class OccurrenceInline(admin.TabularInline):
 
 
 #===============================================================================
-class EventNoteInline(generic.GenericTabularInline):
-    model = Note
-    extra = 1
+class EventAdmin(PlaceholderAdmin):
+    list_display = ('title', 'published')
+    search_fields = ('title',)
+    inlines = [OccurrenceInline]
 
 
-#===============================================================================
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'event_type', 'description')
-    list_filter = ('event_type', )
-    search_fields = ('title', 'description')
-    inlines = [EventNoteInline, OccurrenceInline]
-
-
+#admin.site.register(GoogleCalendarAccount, GoogleCalendarAccountAdmin)
 admin.site.register(Event, EventAdmin)
-admin.site.register(EventType, EventTypeAdmin)
-admin.site.register(Note, NoteAdmin)

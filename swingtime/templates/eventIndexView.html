@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load placeholder_tags %}
+{% load sorl_thumbnail %}
+{% load cms_tags %}
+{% load guw_tags %}
+{% load i18n %}
+{% load sekizai_tags %}
+
+
+{% block base_content %}
+{% comment %} TODO: add child base template with blocks for headline and similar parts {% endcomment %}
+
+<h1>{% page_attribute "page_title" %}</h1>
+<h2 class="subtitle">{% guw_page_attribute "page_subtitle" %}</h2>
+{% if archive %}<h2 class="subtitle">{% trans "Archiv" %}</h2>{% endif %}
+<table class="table table-hover event-table" id="event-table">
+<thead>
+<tr>
+<th>Veranstaltung</th>
+<th>Ort</th>
+<th>Zeit</th>
+</thead>
+<tbody>
+</tr>
+{% for occurrence in occurrences %}
+<tr class="row">
+<td><a href="{{ occurrence.event.get_absolute_url }}" title="{% trans "Mehr Informationen zu dieser Veranstaltung." %}">{{ occurrence.event.title }}</a></td>
+<td>{{ occurrence.event.where }}</td>
+{% if not occurrence.hide_time %}
+<td>{{ occurrence.start_time|date:"d.m.Y H:i" }} - {{ occurrence.end_time|date:"d.m.Y H:i" }}</td>
+{% else %}
+<td>{{ occurrence.start_time|date:"d.m.Y" }} - {{ occurrence.end_time|date:"d.m.Y" }}</td>
+{% endif %}
+</tr>
+{% empty %}
+<h2>{% trans "Es wurden noch keine Veranstaltungen angelegt." %}</h2>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}
+
