@@ -1,6 +1,6 @@
 from haystack import indexes
 from haystack import site
-from swingtime.models import Event
+from cmsplugin_swingtime.models import Event
 from cms.models.pluginmodel import CMSPlugin
 from django.utils.encoding import force_unicode
 import re

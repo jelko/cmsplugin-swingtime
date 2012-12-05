@@ -1,6 +1,6 @@
 from django.contrib.contenttypes import generic
 from django.contrib import admin
-from swingtime.models import *
+from cmsplugin_swingtime.models import *
 from cms.admin.placeholderadmin import PlaceholderAdmin
 
 
