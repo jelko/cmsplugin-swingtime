@@ -14,7 +14,7 @@ def eventIndexView(request):
         return render(request, "eventIndexView.html", {'occurrences': occurrences})
 
 def eventArchiveView(request):
-        occurrences = Occurrence.objects.filter(start_time__lt=datetime.now()).order_by('start_time')
+        occurrences = Occurrence.objects.filter(start_time__lt=datetime.now()).order_by('-start_time')
         occurrences = returnPublishedOccurrenceList(occurrences)
         return render(request, "eventIndexView.html", {'occurrences': occurrences, 'archive': True})
 
