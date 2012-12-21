@@ -23,7 +23,7 @@
 <tbody>
 </tr>
 {% for occurrence in occurrences %}
-<tr class="row">
+<tr>
 <td><a href="{{ occurrence.event.get_absolute_url }}" title="{% trans "Mehr Informationen zu dieser Veranstaltung." %}">{{ occurrence.event.title }}</a></td>
 <td>{{ occurrence.event.where }}</td>
 {% if not occurrence.hide_time %}
