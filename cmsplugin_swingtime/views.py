@@ -17,7 +17,7 @@ def eventTypeView(request, event_type):
         occurrences = Occurrence.objects.filter(start_time__gte=datetime.now()).order_by('start_time')
         try:
                 type = EventType.objects.filter(abbr=event_type)[0]
-                occurrences.filter(event__event_type=type)
+                occurrences = occurrences.filter(event__event_type=type)
         except:
                 return redirect("swingtime-index")
             
