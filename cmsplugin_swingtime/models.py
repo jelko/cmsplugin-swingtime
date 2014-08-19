@@ -24,6 +24,7 @@ from dateutil import rrule
 
 __all__ = (
 #  'GoogleCalendarAccount',
+  'EventType',
   'Event',
   'Occurrence',
   'create_event'
@@ -119,6 +120,23 @@ rrule_days = {
 #      if occurrence.end_time > timezone.now():
 #        occurrence.delete()
 
+#===============================================================================
+class EventType(models.Model):
+    '''
+    Simple ``Event`` classifcation.
+    
+    '''
+    label = models.CharField(_('label'), max_length=50)
+    abbr = models.SlugField(_('slug'), unique=True)
+
+    #===========================================================================
+    class Meta:
+        verbose_name = _('event type')
+        verbose_name_plural = _('event types')
+        
+    #---------------------------------------------------------------------------
+    def __unicode__(self):
+        return self.label
 
 #===============================================================================
 class Event(models.Model):
@@ -128,6 +146,7 @@ class Event(models.Model):
   title = models.CharField(_('title'), max_length=100)
   where = models.CharField(_('where'), max_length=100, blank=True, null=True)
   description = PlaceholderField('description', related_name='event_description', verbose_name=_('description'))
+  event_type = models.ForeignKey(EventType, verbose_name=_('event type'))
   uri = models.URLField(_('URL'), blank=True, null=True)
   published = models.BooleanField(_('published'), default=True)
 
@@ -144,7 +163,7 @@ class Event(models.Model):
   #---------------------------------------------------------------------------
   @models.permalink
   def get_absolute_url(self):
-    return ('swingtime-event', (), {'event_id': str(self.id)})
+    return ('swingtime-event', (), {'event_type': str(self.event_type.abbr), 'event_id': str(self.id)})
 
   #---------------------------------------------------------------------------
   def add_occurrences(self, start_time, end_time, **rrule_params):
@@ -313,7 +332,8 @@ class Occurrence(models.Model):
 
 #-------------------------------------------------------------------------------
 def create_event(
-  title,
+  title, 
+  event_type,
   description='',
   start_time=None,
   end_time=None,
@@ -340,10 +360,17 @@ def create_event(
 
   '''
   from swingtime.conf import settings as swingtime_settings
+  
+  if isinstance(event_type, tuple):
+          event_type, created = EventType.objects.get_or_create(
+              abbr=event_type[0],
+              label=event_type[1]
+          )
 
   event = Event.objects.create(
     title=title,
-    description=description
+    description=description,
+    event_type=event_type
   )
 
   start_time = start_time or datetime.now().replace(

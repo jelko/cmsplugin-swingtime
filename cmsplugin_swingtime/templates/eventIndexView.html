@@ -10,7 +10,7 @@
 {% block base_content %}
 {% comment %} TODO: add child base template with blocks for headline and similar parts {% endcomment %}
 
-<h1>{% page_attribute "page_title" %}</h1>
+<h1>{% if type.label %}{{ type.label }}{% else %}{% page_attribute "page_title" %}{% endif %}</h1>
 <h2 class="subtitle">{% guw_page_attribute "page_subtitle" %}</h2>
 {% if archive %}<h2 class="subtitle">{% trans "Archiv" %}</h2>{% endif %}
 <table class="table table-hover event-table" id="event-table">
